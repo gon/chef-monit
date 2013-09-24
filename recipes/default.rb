@@ -61,14 +61,13 @@ node["monit"]["default_monitrc_configs"].each do |conf|
 end
 
 monit_monitrc "redis" do
-  variables({ app_path: '/srv/www/codelist/current' })
+  variables({ :app_path => '/srv/www/codelist/current' })
 end
 
 monit_monitrc "resque-worker" do
-  variables({ worker_count: 1,
-              app_path: '/srv/www/codelist/current' })
+  variables({ :worker_count => 1, :app_path => '/srv/www/codelist/current' })
 end
 
 monit_monitrc "resque-scheduler" do
-  variables({ app_path: '/srv/www/codelist/current' })
+  variables({ :app_path => '/srv/www/codelist/current' })
 end
