@@ -1,7 +1,7 @@
 <% @worker_count.times do |i| %>
   check process resque_worker_<%= i %>
   with pidfile /var/run/resque_worker_<%= i %>.pid
-  start program = "/bin/su - root -c 'cd <%= @app_path %>; nohup bundle exec rake resque:work RAILS_ENV=production QUEUE=* VVERBOSE=1 PIDFILE=/var/log/resque_worker_<%= i %>.pid 2>&1'"
+  start program = "/bin/su - root -c 'cd <%= @app_path %>; nohup bundle exec rake resque:work RAILS_ENV=production QUEUE=* VVERBOSE=1 PIDFILE=/var/run/resque_worker_<%= i %>.pid 2>&1'"
   stop program = "/bin/sh -c 'cd <%= @app_path %> && kill -s QUIT `cat /var/run/resque_worker_<%= i %>.pid` && rm -f /var/run/resque_worker_<%= i %>.pid; exit 0;'"
   depends on redis
   if changed pid 6 times within 6 cycles then stop
