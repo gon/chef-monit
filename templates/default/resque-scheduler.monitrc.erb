@@ -1,5 +1,6 @@
 check process resque_scheduler
   with pidfile /var/run/resque_scheduler.pid
+  every 4 cycles
   start program = "/bin/su - root -c 'cd <%= @app_path %>; nohup bundle exec rake resque:scheduler RAILS_ENV=production QUEUE=* VVERBOSE=1 PIDFILE=/var/run/resque_scheduler.pid 2>&1'"
   stop program = "/bin/sh -c 'cd <%= @app_path %> && kill -s QUIT `cat /var/run/resque_scheduler.pid` && rm -f /var/run/resque_scheduler.pid; exit 0;'"
   depends on redis
